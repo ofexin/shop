@@ -22,6 +22,10 @@ class SneakersListPage extends StatelessWidget {
               return GridView.builder(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
+                  childAspectRatio:
+                      0.8, // Измените это значение по вашему усмотрению
+                  mainAxisSpacing: 0, // Отступ между товарами по вертикали
+                  crossAxisSpacing: 0,
                 ),
                 itemCount: documents.length,
                 itemBuilder: (BuildContext context, int index) {
@@ -45,7 +49,7 @@ class SneakersListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(5),
+      padding: EdgeInsets.fromLTRB(10, 5, 10, 15),
       child: GestureDetector(
         onTap: () {
           Navigator.push(
@@ -62,52 +66,46 @@ class SneakersListItem extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Container(
-                child: SizedBox(
-              width: MediaQuery.of(context).size.width / 2 - 15,
-              child: Column(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey, width: 1.0),
+            Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey, width: 1.0),
+                ),
+                child: Column(
+                  children: [
+                    Container(
+                      height: 185,
+                      width: 185,
+                      child: AspectRatio(
+                        aspectRatio: 1.0,
+                        child: Image.network(
+                          sneakers.photoUrl,
+                          fit: BoxFit.contain,
+                        ),
+                      ),
                     ),
-                    child: Column(
-                      children: [
-                        Container(
-                          height: 150,
-                          width: 150,
-                          child: AspectRatio(
-                            aspectRatio: 1.0,
-                            child: Image.network(
-                              sneakers.photoUrl,
-                              fit: BoxFit.contain,
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 3),
-                        Text(
-                          sneakers.name,
-                          style: TextStyle(
-                            fontWeight: FontWeight.normal,
-                            fontSize: 13,
-                          ),
-                          textAlign: TextAlign.start,
-                        ),
-                        SizedBox(height: 3),
-                        Text(
-                          sneakers.price,
-                          style: TextStyle(
-                            fontWeight: FontWeight.normal,
-                            fontSize: 13,
-                          ),
-                          textAlign: TextAlign.start,
-                        ),
-                      ],
+                    SizedBox(height: 3),
+                    Text(
+                      sneakers.name,
+                      style: TextStyle(
+                        fontWeight: FontWeight.normal,
+                        fontSize: 15,
+                      ),
+                      textAlign: TextAlign.start,
                     ),
-                  ),
-                ],
+                    SizedBox(height: 3),
+                    Text(
+                      sneakers.price,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                      ),
+                      textAlign: TextAlign.start,
+                    ),
+                  ],
+                ),
               ),
-            )),
+            ),
           ],
         ),
       ),
