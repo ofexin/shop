@@ -111,17 +111,29 @@ class _SneakersDetailsPageState extends State<SneakersDetailsPage> {
                                 MaterialStateProperty.resolveWith<Color>(
                               (Set<MaterialState> states) {
                                 if (states.contains(MaterialState.pressed)) {
-                                  return Colors.red;
+                                  return Colors.grey;
                                 } else if (isSelected) {
-                                  return Colors.green;
+                                  return Colors.black;
                                 }
-                                return Colors.blue;
+                                return Colors.white;
+                              },
+                            ),
+                            side: MaterialStateProperty.resolveWith<BorderSide>(
+                              (Set<MaterialState> states) {
+                                if (isSelected) {
+                                  return BorderSide.none;
+                                }
+                                return BorderSide(
+                                    color: Colors.grey, width: 2.0);
                               },
                             ),
                           ),
                           child: Text(
                             size,
-                            style: TextStyle(fontSize: 16, color: Colors.black),
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: isSelected ? Colors.white : Colors.black,
+                            ),
                           ),
                         ),
                       );
@@ -143,12 +155,23 @@ class _SneakersDetailsPageState extends State<SneakersDetailsPage> {
                 child: Text(widget.sneakers.description),
               ),
               SizedBox(height: 10),
-              ElevatedButton(
-                onPressed: () {
-                  cart.addItem(widget.sneakers, widget.sneakers.selectedSize);
-                },
-                child: Text('Добавить в корзину'),
-              ),
+              Padding(
+                  padding: EdgeInsets.only(bottom: 10),
+                  child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: SizedBox(
+                          width: 400,
+                          height: 50,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              cart.addItem(widget.sneakers,
+                                  widget.sneakers.selectedSize);
+                            },
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.black,
+                            ),
+                            child: Text('Добавить в корзину'),
+                          )))),
             ],
           ),
         ),
