@@ -99,7 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 image: DecorationImage(
                   fit: BoxFit.cover,
                   image: NetworkImage(
-                      'https://cdn.sportmaster.ru/upload/content/cmsgate/ru_sm/smprod/RICH/26008470299/26008470299_01.jpg'), // URL фото
+                      'https://cdn.sportmaster.ru/upload/content/cmsgate/ru_sm/smprod/RICH/26008470299/26008470299_01.jpg'),
                 ),
               ),
             ),
