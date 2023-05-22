@@ -22,9 +22,8 @@ class SneakersListPage extends StatelessWidget {
               return GridView.builder(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  childAspectRatio:
-                      0.8, // Измените это значение по вашему усмотрению
-                  mainAxisSpacing: 0, // Отступ между товарами по вертикали
+                  childAspectRatio: 0.8,
+                  mainAxisSpacing: 0,
                   crossAxisSpacing: 0,
                 ),
                 itemCount: documents.length,

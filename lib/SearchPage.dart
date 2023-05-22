@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'SneakersListPage.dart';
+import 'SneakersSearchItem.dart';
 
 class SearchPage extends StatefulWidget {
   @override
@@ -7,11 +10,32 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   final TextEditingController _searchController = TextEditingController();
+  List<Sneakers> searchResults = [];
 
   @override
   void dispose() {
     _searchController.dispose();
     super.dispose();
+  }
+
+  void searchSneakers(String query) async {
+    final CollectionReference sneakersCollection =
+        FirebaseFirestore.instance.collection('sneakers');
+    final QuerySnapshot snapshot = await sneakersCollection.get();
+    final List<QueryDocumentSnapshot> documents = snapshot.docs;
+
+    List<Sneakers> allSneakers =
+        documents.map((doc) => Sneakers.fromSnapshot(doc)).toList();
+
+    List<Sneakers> results = allSneakers.where((sneakers) {
+      final name = sneakers.name.toLowerCase();
+      final searchQuery = query.toLowerCase();
+      return name.contains(searchQuery);
+    }).toList();
+
+    setState(() {
+      searchResults = results;
+    });
   }
 
   @override
@@ -45,6 +69,9 @@ class _SearchPageState extends State<SearchPage> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
+                        onSubmitted: (value) {
+                          searchSneakers(value);
+                        },
                       ),
                     ),
                   ),
@@ -54,8 +81,16 @@ class _SearchPageState extends State<SearchPage> {
             Expanded(
               child: Container(
                 color: Colors.white,
-                child: Center(
-                  child: Text("Здесь будет результат поиска"),
+                child: GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 0.8,
+                  ),
+                  itemCount: searchResults.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    final sneakers = searchResults[index];
+                    return SneakersSearchItem(sneakers: sneakers);
+                  },
                 ),
               ),
             ),

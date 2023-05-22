@@ -49,7 +49,12 @@ class _MyCatalogPageState extends State<MyCatalogPage> {
             ),
             child: InkWell(
               onTap: () {
-                Navigator.pushNamed(context, '/SearchPage');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SearchPage(),
+                  ),
+                );
               },
               child: Row(
                 children: [

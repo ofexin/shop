@@ -60,7 +60,12 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             child: InkWell(
               onTap: () {
-                Navigator.pushNamed(context, '/SearchPage');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SearchPage(),
+                  ),
+                );
               },
               child: Row(
                 children: [
